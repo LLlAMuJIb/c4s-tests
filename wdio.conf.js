@@ -70,7 +70,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'warn',
     //
     // Set specific log levels per logger
     // loggers:
@@ -97,11 +97,11 @@ exports.config = {
     baseUrl: 'http://localhost',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 20000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 120000,
+    connectionRetryTimeout: 300000,
     //
     // Default request retries count
     connectionRetryCount: 3,
@@ -132,7 +132,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['json','html-nice'],
+    reporters: ['html-nice'],
 
 
     
@@ -195,7 +195,7 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
+    //before: function (capabilities, specs) {
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -237,10 +237,11 @@ exports.config = {
      * @param {Boolean} result.passed    true if test has passed, otherwise false
      * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
-
-
+     afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        console.log("After scenario, reload session!");
+        await browser.closeWindow()
+        await browser.reloadSession()
+     },
     /**
      * Hook that gets executed after the suite has ended
      * @param {Object} suite suite details

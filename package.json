@@ -16,6 +16,10 @@
         "wdio-wait-for": "^2.2.5"
     },
     "scripts": {
-        "wdio": "wdio run wdio.conf.js"
+        "wdio": "wdio run wdio.conf.js",
+        "test": "npx wdio run ./wdio.conf.js --spec basic.js"
+    },
+    "dependencies": {
+        "appium": "^1.22.3"
     }
 }
